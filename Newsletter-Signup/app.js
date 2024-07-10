@@ -66,5 +66,5 @@ app.listen(process.env.PORT || 3000, function() {
     console.log("Server is Online!");
 })
 
-// 3d9252dcb01ff3d13d4461ef12ff0361-us22
+// MAILCHIMP API Key
 // 41b42c9162
