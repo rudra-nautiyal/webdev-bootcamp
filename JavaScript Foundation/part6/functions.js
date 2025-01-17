@@ -67,3 +67,5 @@ When a function is defined inside another function, it forms a closure. The inne
 
 3. Global scope (variables defined outside any function).
 */
+
+// map, filter and reduce
