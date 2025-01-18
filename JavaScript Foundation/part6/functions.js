@@ -68,4 +68,59 @@ When a function is defined inside another function, it forms a closure. The inne
 3. Global scope (variables defined outside any function).
 */
 
-// map, filter and reduce
+const arr = [5, 1, 3, 2, 6];
+
+function double(x) {
+  return x * 2;
+}
+
+// map function - used for mapping individual values in an array.
+
+const output = arr.map((x) => x * 2); // Valid syntax. This and fn double perform the same operation.
+
+// filter function - used for filtering values in an array.
+
+function isOdd(x) {
+  return x % 2;
+}
+
+const output2 = arr.filter((x) => x % 2); // Valid syntax. This and fn isOdd perform the same operation.
+
+// reduce function - used for reducing the sequence of values into a single value.
+
+function findSum(arr) {
+  let sum = 0;
+  for (let i = 0; i < arr.length; i++) {
+    sum += arr[i];
+  }
+  return sum;
+}
+
+const output3 = arr.reduce(function (acc, curr) {
+  // similar to fn findSum but a bit more complex in regards to format. Overall, the same tho.
+  acc = acc + curr;
+  return acc;
+}, 0);
+
+const output4 = arr.reduce((acc, curr) => {
+  if (curr > acc) {
+    acc = curr;
+  }
+  return acc;
+}, 0);
+
+// https://youtu.be/zdp0zrpKzIE?si=PiD2xxxZblRvwxeL&t=1734 --> this question
+
+const output5 = users.reduce((acc, curr) => {
+  if (acc[curr.age]) {
+    acc[curr.age] = ++acc[curr.age];
+  } else {
+    acc[curr.age] = 1;
+  }
+
+  return acc;
+}, {});
+
+// https://youtu.be/zdp0zrpKzIE?si=ijBbb1-W6p9ACTrC&t=1945 --> this question
+
+const output6 = user.filter((x) => x.age < 30).map((x) => x.firstname);
