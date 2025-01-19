@@ -124,3 +124,22 @@ const output5 = users.reduce((acc, curr) => {
 // https://youtu.be/zdp0zrpKzIE?si=ijBbb1-W6p9ACTrC&t=1945 --> this question
 
 const output6 = user.filter((x) => x.age < 30).map((x) => x.firstname);
+
+// method - A function that is a property of an object. While all methods are functions, not all functions are methods.
+
+const person = {name: "Hitesh",
+  age: 19.5,
+  introduce: function(){ // this is a method
+      return `Hi, my name is ${this.name} and I am ${this.age} years old`;
+  }
+};
+
+// higher order function - having a function within an function is called a higher order function.
+
+function outer() {
+  function inner(){
+      return `Inner function called`;
+  }
+  
+  return inner();
+}
