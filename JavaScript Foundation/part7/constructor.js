@@ -32,6 +32,8 @@ Animal.prototype.sound = function () {
   return `${this.species} makes a sound`;
 };
 
+// Dog.prototype = Object.create(Animal.prototype); => inheritance from animal using prototype, setting up prototype chain.
+
 let dog = new Animal("Dog");
 console.log(dog.sound());
 
