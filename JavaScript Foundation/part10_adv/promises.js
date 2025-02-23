@@ -1,24 +1,14 @@
-// an object representing the eventual completion or failure of an asynchronous operation is called a promise
-
-function fetchData() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      let success = true;
-      if (success) {
-        resolve("Data fetched successfully!");
-      } else {
-        reject("Error fetching data");
-      }
-    }, 1000);
-  });
+function timer(resolve) {
+  setTimeout(resolve, 3000);
 }
 
-// consume promise
+function setTimeoutPromisified() {
+  return new Promise(timer);
+}
 
-fetchData()
-  .then((data) => {
-    console.log(data);
-    return `Rudy the dragon!`;
-  })
-  .then((value) => console.log(value))
-  .catch((error) => console.error(error));
+const p = setTimeoutPromisified();
+
+function callback() {
+  console.log("timer has ended");
+}
+p.then(callback);
