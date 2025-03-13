@@ -1,5 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+
 const app = express();
 const JWT_SECRET = "rudranautiyal";
 
@@ -7,9 +8,26 @@ app.use(express.json());
 
 const users = [];
 
+function authMiddleware(req, res, next) {
+  const token = req.headers.token;
+  const decodedInformation = jwt.verify(token, JWT_SECRET);
+  const username = decodedInformation.username;
+
+  if (!username) {
+    res.json({
+      message: "You are not signed in!",
+    });
+  } else {
+    req.username = username;
+    next();
+  }
+}
+
 app.post("/signup", function (req, res) {
   const username = req.body.username;
   const password = req.body.password;
+
+  // check if there exist people with the same username already exists.
 
   users.push({
     username: username,
@@ -28,7 +46,7 @@ app.post("/signin", function (req, res) {
   const password = req.body.password;
 
   const user = users.find(function (u) {
-    if (u.username == username && u.password == password) {
+    if (u.username === username && u.password === password) {
       return true;
     } else {
       return false;
@@ -54,14 +72,11 @@ app.post("/signin", function (req, res) {
   }
 });
 
-app.get("/me", function (req, res) {
-  const token = req.headers.token;
-  const decodedInformation = jwt.verify(token, JWT_SECRET);
-  const username = decodedInformation.username;
+app.get("/me", authMiddleware, function (req, res) {
   let foundUser = null;
 
   for (let i = 0; i < users.length; i++) {
-    if (users[i].username == username) {
+    if (users[i].username == req.username) {
       foundUser = users[i];
     }
   }
@@ -70,10 +85,6 @@ app.get("/me", function (req, res) {
     res.json({
       username: foundUser.username,
       password: foundUser.password,
-    });
-  } else {
-    res.json({
-      message: "token invalid",
     });
   }
 });
