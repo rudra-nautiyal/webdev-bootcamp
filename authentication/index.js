@@ -8,6 +8,10 @@ app.use(express.json());
 
 const users = [];
 
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
 function authMiddleware(req, res, next) {
   const token = req.headers.token;
   const decodedInformation = jwt.verify(token, JWT_SECRET);
@@ -62,7 +66,7 @@ app.post("/signin", function (req, res) {
     );
 
     res.json({
-      message: token,
+      token: token,
     });
     console.log(users);
   } else {
