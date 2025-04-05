@@ -1,75 +1,38 @@
+import { useState } from "react";
 import "./App.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-  redirect,
-  Outlet,
-} from "react-router-dom";
+import { useRef } from "react";
 
 function App() {
-  return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout></Layout>}>
-            <Route
-              path="/neet/online-coaching-class-11"
-              element={<Class11Program />}
-            />
-            <Route
-              path="/neet/online-coaching-class-12"
-              element={<Class12Program />}
-            />
-            <Route path="/" element={<Landing />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
-}
+  const [count, setCount] = useState(0);
+  const timer = useRef();
 
-function Layout() {
-  return (
-    <div style={{ height: "100vh" }}>
-      <Link to="/">Allen</Link>|
-      <Link to="/neet/online-coaching-class-11">Class 11</Link>|
-      <Link to="/neet/online-coaching-class-12">Class 12</Link>
-      <div style={{ height: "90vh" }}>
-        <Outlet></Outlet>
-      </div>
-      Footer
-    </div>
-  );
-}
+  function startClock() {
+    let value = setInterval(() => {
+      setCount((count) => count + 1);
+    }, 1000);
+    timer.current = value;
+  }
 
-function ErrorPage() {
-  return <div>not a page, use correct url nigger.</div>;
-}
-
-function Landing() {
-  return <div>Welcome to allen</div>;
-}
-
-function Class11Program() {
-  return <div>NEET programs for Class 11th</div>;
-}
-
-function Class12Program() {
-  const navigate = useNavigate();
-
-  function redirectUser() {
-    navigate("/");
+  function stopClock() {
+    clearInterval(timer.current);
   }
 
   return (
-    <div>
-      NEET programs for Class 12th
-      <br />
-      <button onClick={redirectUser}>Go back to landing page</button>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        flexDirection: "column",
+        fontSize: "22px",
+      }}
+    >
+      {count}
+      <div style={{ marginTop: "1rem" }}>
+        <button onClick={startClock}>Start</button>
+        <button onClick={stopClock}>Stop</button>
+      </div>
     </div>
   );
 }
